@@ -1,0 +1,21 @@
+{{ define "edit" }}
+<h2>编辑文章</h2>
+<form action="/edit/{{ .post.ID }}" method="POST">
+    <div>
+        <label for="title">标题</label>
+        <input type="text" id="title" name="Title" value="{{ .post.Title }}" required>
+    </div>
+    <div>
+        <label for="author">作者</label>
+        <input type="text" id="author" name="Author" value="{{ .post.Author }}" required>
+    </div>
+    <div>
+        <label for="content">内容</label>
+        <textarea id="content" name="Content" required>{{ .post.Content }}</textarea>
+    </div>
+    <div>
+        <button type="submit">保存修改</button>
+        <a href="/posts/{{ .post.ID }}" style="margin-left: 10px; color: #3498db; text-decoration: none;">取消</a>
+    </div>
+</form>
+{{ end }}

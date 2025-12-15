@@ -1,0 +1,52 @@
+{{ define "show" }}
+<div class="post">
+    <h2>{{ .post.Title }}</h2>
+    <div class="post-meta">
+        作者: {{ .post.Author }} | 创建时间: {{ .post.CreatedAt.Format "2006-01-02 15:04" }} | 更新时间: {{ .post.UpdatedAt.Format "2006-01-02 15:04" }}
+    </div>
+    <div class="post-content">
+        {{ .post.Content }}
+    </div>
+    <div class="post-actions">
+        <a href="/">返回首页</a>
+        <a href="/edit/{{ .post.ID }}">编辑</a>
+        <form action="/delete/{{ .post.ID }}" method="POST" style="display: inline;">
+            <button type="submit" onclick="return confirm('确定要删除这篇文章吗？');">删除</button>
+        </form>
+    </div>
+</div>
+
+<hr style="margin: 50px 0;">
+
+<h3>评论 ({{ if .post.Comments }}{{ len .post.Comments }}{{ else }}0{{ end }})</h3>
+{{ if not .post.Comments }}
+    <p>还没有评论，快来发表第一条评论吧！</p>
+{{ else }}
+    {{ range .post.Comments }}
+    <div class="comment">
+        <div class="comment-author">{{ .Name }}</div>
+        <div class="comment-meta">{{ .Email }} | {{ .CreatedAt.Format "2006-01-02 15:04" }}</div>
+        <div class="comment-content">{{ .Content }}</div>
+    </div>
+    {{ end }}
+{{ end }}
+
+<h3>发表评论</h3>
+<form action="/posts/{{ .post.ID }}/comments" method="POST">
+    <div>
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="Name" required>
+    </div>
+    <div>
+        <label for="email">邮箱</label>
+        <input type="email" id="email" name="Email" required>
+    </div>
+    <div>
+        <label for="content">评论内容</label>
+        <textarea id="content" name="Content" required></textarea>
+    </div>
+    <div>
+        <button type="submit">发表评论</button>
+    </div>
+</form>
+{{ end }}

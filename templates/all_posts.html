@@ -1,0 +1,31 @@
+{{ define "all_posts" }}
+<h2>所有文章</h2>
+<div class="posts">
+    {{ if not .posts }}
+        <p>还没有文章，快来写第一篇吧！</p>
+    {{ else }}
+        {{ range .posts }}
+        <div class="post">
+            <h2><a href="/posts/{{ .ID }}">{{ .Title }}</a></h2>
+            <div class="post-meta">
+                作者: {{ .Author }} | 创建时间: {{ .CreatedAt.Format "2006-01-02 15:04" }}
+            </div>
+            <div class="post-content">
+                {{ if gt (len .Content) 200 }}
+                    {{ slicestr .Content 0 200 }}...
+                {{ else }}
+                    {{ .Content }}
+                {{ end }}
+            </div>
+            <div class="post-actions">
+                <a href="/posts/{{ .ID }}">阅读全文</a>
+                <a href="/edit/{{ .ID }}">编辑</a>
+                <form action="/delete/{{ .ID }}" method="POST" style="display: inline;">
+                    <button type="submit" onclick="return confirm('确定要删除这篇文章吗？');">删除</button>
+                </form>
+            </div>
+        </div>
+        {{ end }}
+    {{ end }}
+</div>
+{{ end }}

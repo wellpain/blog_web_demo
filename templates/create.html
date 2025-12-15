@@ -1,0 +1,21 @@
+{{ define "create" }}
+<h2>写文章</h2>
+<form action="/create" method="POST">
+    <div>
+        <label for="title">标题</label>
+        <input type="text" id="title" name="Title" required>
+    </div>
+    <div>
+        <label for="author">作者</label>
+        <input type="text" id="author" name="Author" required>
+    </div>
+    <div>
+        <label for="content">内容</label>
+        <textarea id="content" name="Content" required></textarea>
+    </div>
+    <div>
+        <button type="submit">发布文章</button>
+        <a href="/" style="margin-left: 10px; color: #3498db; text-decoration: none;">取消</a>
+    </div>
+</form>
+{{ end }}
